@@ -15,6 +15,7 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->unsignedBigInteger('organization_id');
             $table->unsignedBigInteger('location_id');
             $table->string('name', 255);
@@ -26,6 +27,9 @@ class CreateCustomersTable extends Migration
             $table->string('zone_code');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('organization_id')->references('id')->on('organizations');
+            $table->foreign('location_id')->references('id')->on('locations');
         });
     }
 

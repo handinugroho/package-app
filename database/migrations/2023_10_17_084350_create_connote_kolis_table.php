@@ -21,6 +21,7 @@ class CreateConnoteKolisTable extends Migration
             $table->string('description');
             $table->text('awb_url');
             $table->unsignedBigInteger('formula_id')->nullable();
+            $table->json('surcharge');
             $table->bigInteger('length');
             $table->bigInteger('chargeable_weight');
             $table->bigInteger('width');

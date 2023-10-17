@@ -27,6 +27,7 @@ class Package extends Model
         'transaction_cash_change',
         'payment_type_id',
         'payment_type_name',
+        'organization_id',
         'origin_data_id',
         'destination_data_id',
         'custom_field',
@@ -36,6 +37,7 @@ class Package extends Model
 
     protected $hidden = [
         'id',
+        'deleted_at',
     ];
 
     public function getRouteKeyName()
@@ -49,9 +51,14 @@ class Package extends Model
         'current_location' => 'array',
     ];
 
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_id');
+    }
+
     public function connote_data(): HasOne
     {
-        return $this->hasOne(Connote::class, 'package_id');
+        return $this->hasOne(Connote::class, 'package_id', 'id');
     }
 
     public function origin_data(): BelongsTo

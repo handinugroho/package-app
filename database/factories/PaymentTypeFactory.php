@@ -15,7 +15,8 @@ class PaymentTypeFactory extends Factory
     {
         return [
             //
-            'name' => $this->faker->randomElement(['Invoice'])
+            'name' => $this->faker->randomElement(['Invoice']),
+            'uuid' => $this->faker->uuid(),
         ];
     }
 }

@@ -15,6 +15,7 @@ class CustomerFactory extends Factory
     {
         return [
             //
+            'uuid' => $this->faker->uuid(),
             'name' => $this->faker->name(),
             'address' => $this->faker->address(),
             'address_detail' => $this->faker->streetAddress(),

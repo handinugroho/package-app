@@ -5,7 +5,113 @@ meta {
 }
 
 post {
-  url: http://127.0.0.1:8000/api/package/123
-  body: none
+  url: http://127.0.0.1:8000/api/package
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "uuid": "9a63e69b-613c-4887-ba0b-f9d5b6fd241e",
+    "customer_name": "PT. AMARA PRIMATIGA",
+    "customer_code": "1678593",
+    "transaction_order": 121,
+    "transaction_code": "CGKFT20200715121",
+    "transaction_amount": 70700,
+    "transaction_discount": 0,
+    "transaction_additional_field": "",
+    "transaction_cash_amount": 0,
+    "transaction_cash_change": 0,
+    "additional_field": "",
+    "organization_uuid": "eeaddd12-c7bc-3b9f-8091-57c31cd379ef",
+    "payment_type_uuid": "da88acf8-c3a3-32f2-b90f-593c64b0f53c",
+    "origin_data_uuid": "2c80770f-f248-3429-9a3d-d823c46fb31c",
+    "destination_data_uuid": "d55d1472-04c3-3a72-b37f-bb0c1001d3db",
+    "custom_field": {
+      "catatan_tambahan": "JANGAN DI BANTING / DI TINDIH"
+    },
+    "customer_attribute": {
+      "TOP": "14 Hari",
+      "Nama_Sales": "Radit Fitrawikarsa",
+      "Jenis_Pelanggan": "B2B"
+    },
+    "current_location": {
+      "code": "JKTS01",
+      "name": "Hub Jakarta Selatan",
+      "type": "Agent"
+    },
+    "connote_data": {
+      "number": 1,
+      "connote_state": "PAID",
+      "service": "ECO",
+      "service_price": 70700,
+      "amount": 70700,
+      "booking_code": "",
+      "zone_code_from": "CGKFT",
+      "zone_code_to": "SMG",
+      "surcharge_amount": null,
+      "actual_weight": 20,
+      "volume_weight": 0,
+      "chargeable_weight": 20,
+      "total_package": 3,
+      "sla_day": 4,
+      "location_name": "Hub Jakarta Selatan",
+      "location_type": "HUB",
+      "source_tariff_type": "tariff_customers",
+      "source_tariff_id": 1576868,
+      "pod": null,
+      "history": []
+    },
+    "koli_data": [
+      {
+        "koli_length": 0,
+        "koli_chargeable_weight": 9,
+        "koli_width": 0,
+        "koli_surcharge": [],
+        "koli_height": 0,
+        "koli_description": "V WARP",
+        "koli_formula_id": null,
+        "koli_volume": 0,
+        "koli_weight": 9,
+        "koli_custom_field": {
+          "awb_sicepat": null,
+          "harga_barang": null
+        },
+        "koli_code": "AWB00100209082020.1"
+      },
+      {
+        "koli_length": 0,
+        "koli_chargeable_weight": 9,
+        "koli_width": 0,
+        "koli_surcharge": [],
+        "koli_height": 0,
+        "koli_description": "V WARP",
+        "koli_formula_id": null,
+        "koli_volume": 0,
+        "koli_weight": 9,
+        "koli_custom_field": {
+          "awb_sicepat": null,
+          "harga_barang": null
+        },
+        "koli_code": "AWB00100209082020.2"
+      },
+      {
+        "koli_length": 0,
+        "koli_chargeable_weight": 2,
+        "koli_width": 0,
+        "koli_surcharge": [],
+        "koli_height": 0,
+        "updated_at": "2020-07-15 11:11:13",
+        "koli_description": "LID HOT CUP",
+        "koli_formula_id": null,
+        "koli_volume": 0,
+        "koli_weight": 2,
+        "koli_custom_field": {
+          "awb_sicepat": null,
+          "harga_barang": null
+        },
+        "koli_code": "AWB00100209082020.3"
+      }
+    ]
+  }
 }

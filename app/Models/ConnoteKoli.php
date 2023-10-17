@@ -31,6 +31,7 @@ class ConnoteKoli extends Model
 
     protected $hidden = [
         'id',
+        'deleted_at',
     ];
 
     protected $casts = [

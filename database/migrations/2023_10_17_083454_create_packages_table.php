@@ -16,6 +16,7 @@ class CreatePackagesTable extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
+            $table->unsignedBigInteger('organization_id');
             $table->string('customer_name', 255);
             $table->string('customer_code', 255);
             $table->bigInteger('transaction_order');
@@ -26,7 +27,7 @@ class CreatePackagesTable extends Migration
             $table->bigInteger('transaction_cash_amount')->default(0);
             $table->bigInteger('transaction_cash_change')->default(0);
             $table->unsignedBigInteger('payment_type_id');
-            $table->bigInteger('payment_type_name');
+            $table->string('payment_type_name');
             $table->unsignedBigInteger('origin_data_id');
             $table->unsignedBigInteger('destination_data_id');
             $table->json('custom_field')->nullable();
@@ -35,6 +36,7 @@ class CreatePackagesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
+            $table->foreign('organization_id')->references('id')->on('organizations');
             $table->foreign('payment_type_id')->references('id')->on('payment_types');
             $table->foreign('origin_data_id')->references('id')->on('customers');
             $table->foreign('destination_data_id')->references('id')->on('customers');

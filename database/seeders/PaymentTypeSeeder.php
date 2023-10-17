@@ -15,6 +15,6 @@ class PaymentTypeSeeder extends Seeder
     public function run()
     {
         //
-        PaymentType::factory()->make();
+        PaymentType::factory()->create();
     }
 }

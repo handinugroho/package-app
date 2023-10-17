@@ -27,13 +27,16 @@ class Connote extends Model
         'zone_code_to',
         'surcharge_amount',
         'package_id',
+        'organization_id',
         'actual_weight',
         'volume_weight',
         'chargeable_weight',
-        'organization_id',
         'total_package',
         'sla_day',
         'location_name',
+        'location_type',
+        'source_tariff_type',
+        'source_tariff_id',
         'pod',
         'history',
     ];
@@ -43,12 +46,15 @@ class Connote extends Model
         'package_id',
         'connote_state_id',
         'organization_id',
+        'deleted_at',
     ];
 
     protected $casts = [
         'pod' => 'array',
         'history' => 'array',
     ];
+
+
 
     public function state(): BelongsTo
     {

@@ -15,6 +15,7 @@ class CreatePaymentTypesTable extends Migration
     {
         Schema::create('payment_types', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('name');
             $table->timestamps();
         });

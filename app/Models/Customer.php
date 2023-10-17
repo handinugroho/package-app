@@ -28,6 +28,7 @@ class Customer extends Model
 
     protected $hidden = [
         'id',
+        'deleted_at',
     ];
 
     public function organization(): BelongsTo
