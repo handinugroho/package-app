@@ -23,5 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('package', '\App\Http\Controllers\PackageController@store');
 Route::get('package', '\App\Http\Controllers\PackageController@index');
 Route::get('package/{package}', '\App\Http\Controllers\PackageController@show');
-// Route::put('package/{package}', '\App\Http\Controllers\PackageController@update');
-// Route::patch('package/{package}', '\App\Http\Controllers\PackageController@patchUpdate');
+Route::put('package/{package}', '\App\Http\Controllers\PackageController@update');
+Route::patch('package/{package}', '\App\Http\Controllers\PackageController@patchUpdate');
+Route::delete('package/{package}', '\App\Http\Controllers\PackageController@destroy');
