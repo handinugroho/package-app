@@ -343,6 +343,48 @@ class PackageTest extends TestCase
         ]);
     }
 
+    public function test_patch_package()
+    {
+        $this->seed();
+        // get first package in DB
+        $package = $package = Package::with([
+            'organization',
+            'payment_type',
+            'origin_data',
+            'destination_data',
+            'connote_data',
+            'connote_data.koli_data',
+        ])
+            ->first();
+
+        $response = $this->patchJson(
+            '/api/package/' . $package->uuid,
+            [
+                'customer_name' => 'ASD',
+                "current_location" => [
+                    "code" => "JKT01",
+                    "name" => "Hub Jakarta Selatan",
+                    "type" => "Agent Edited"
+                ],
+                'connote_data' => [
+                    'number' => 15,
+                ],
+            ]
+        );
+
+        $response
+            ->assertStatus(200);
+
+        $package->refresh();
+
+        $this->assertDatabaseHas('packages', [
+            'uuid' => $package->uuid,
+        ]);
+
+        $this->assertEquals($package->connote_data->number, 15);
+        $this->assertEquals($package->current_location['type'], 'Agent Edited');
+    }
+
     public function test_delete_package()
     {
         $this->seed();

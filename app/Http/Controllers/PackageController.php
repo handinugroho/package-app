@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PatchPackageRequest;
 use App\Http\Requests\StorePackageRequest;
 use App\Http\Requests\UpdatePackageRequest;
 use App\Models\Connote;
@@ -13,6 +14,7 @@ use App\Models\Package;
 use App\Models\PaymentType;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -44,7 +46,7 @@ class PackageController extends Controller
     public function store(StorePackageRequest $request)
     {
         //
-        $validated = $request->validated();
+        $validated = $request->safe()->all();
 
         DB::beginTransaction();
         try {
@@ -192,6 +194,7 @@ class PackageController extends Controller
                 'data' => $package
             ]);
         } catch (Exception $e) {
+            DB::rollBack();
             return response()->json([
                 'success' => false,
                 'message' => "Internal server error",
@@ -231,7 +234,7 @@ class PackageController extends Controller
     public function update(UpdatePackageRequest $request, Package $package)
     {
         //
-        $validated = $request->validated();
+        $validated = $request->safe()->all();
 
 
         DB::beginTransaction();
@@ -380,6 +383,7 @@ class PackageController extends Controller
                 'data' => $package
             ]);
         } catch (Exception $e) {
+            DB::rollBack();
             return response()->json([
                 'success' => false,
                 'message' => "Internal server error",
@@ -389,17 +393,57 @@ class PackageController extends Controller
     }
 
 
-    public function patchUpdate(Request $request, Package $package)
+    public function patchUpdate(PatchPackageRequest $request, Package $package)
     {
         //
-        $package->update([
-            $request->all()
+        $package->load([
+            'connote_data',
         ]);
-        return response()->json([
-            'success' => true,
-            'message' => 'Data is successfully patched',
-            'data' => []
-        ]);
+        $validated = $request->safe()->all();
+
+
+        DB::beginTransaction();
+
+        try {
+            $package_validated = Arr::except($validated, ['connote_data', 'koli_data']);
+
+            Package::where('id', $package->id)->update($package_validated);
+
+            if (array_key_exists('connote_data', $validated)) {
+                $connote_validated = $validated['connote_data'];
+                Connote::where('package_id', $package->id)
+                    ->update($connote_validated);
+            }
+
+
+            if (array_key_exists('koli_data', $validated)) {
+                $koli_data_validated = $validated['koli_data'];
+                dd($koli_data_validated);
+
+                foreach ($koli_data_validated as $koli) {
+                    $koli_db = ConnoteKoli::where('uuid', $koli['uuid'])
+                        ->first();
+
+                    if ($koli_db) {
+                        ConnoteKoli::where('id')
+                            ->update($koli);
+                    }
+                }
+            }
+            DB::commit();
+            return response()->json([
+                'success' => true,
+                'message' => 'Data is successfully updated',
+                'data' => []
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => "Internal server error",
+                'errors' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

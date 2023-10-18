@@ -65,11 +65,11 @@ class UpdatePackageRequest extends FormRequest
             'koli_data.*.koli_chargeable_weight' => 'required|numeric|gte:0',
             'koli_data.*.koli_width' => 'required|numeric|gte:0',
             'koli_data.*.koli_surcharge' => 'nullable|array|min:0',
-            'koli_data.*.koli_height' => 'required||numeric|gte:0',
+            'koli_data.*.koli_height' => 'required|numeric|gte:0',
             'koli_data.*.koli_description' => 'nullable|string',
             'koli_data.*.koli_formula_id' => 'nullable|numeric',
-            'koli_data.*.koli_volume' => 'required||numeric|gte:0',
-            'koli_data.*.koli_weight' => 'required||numeric|gte:0',
+            'koli_data.*.koli_volume' => 'required|numeric|gte:0',
+            'koli_data.*.koli_weight' => 'required|numeric|gte:0',
             'koli_data.*.koli_custom_field' => 'required|array',
         ];
     }
