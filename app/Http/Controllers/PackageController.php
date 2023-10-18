@@ -333,27 +333,37 @@ class PackageController extends Controller
                 'history' => $validated['connote_data']['pod'] ?? [],
             ];
 
+            // update connote
             Connote::where('package_id', $package->id)
                 ->update($data_connote);
+
+            $connote = $package->connote_data;
+
+            // soft delete old kolis
+            ConnoteKoli::where('connote_id', $connote->id)
+                ->delete();
 
             $koli = $validated['koli_data'];
             foreach ($koli as $index => $koli) {
 
-                $koli_code = $package->connote_data->code . "." . $index;
+                $koli_code = $connote->code . "." . $index;
 
-                ConnoteKoli::where('code', $koli_code)
-                    ->update([
-                        "length" => $koli['koli_length'],
-                        "chargeable_weight" => $koli['koli_chargeable_weight'],
-                        "width" => $koli['koli_width'],
-                        "surcharge" => $koli['koli_surcharge'],
-                        "height" => $koli['koli_height'],
-                        "description" => $koli['koli_description'],
-                        "formula_id" => $koli['koli_formula_id'] ?? null,
-                        "volume" => $koli['koli_volume'],
-                        "weight" => $koli['koli_weight'],
-                        "custom_field" => $koli['koli_custom_field'],
-                    ]);
+                ConnoteKoli::create([
+                    'uuid' => Str::uuid(),
+                    'awb_url' => "https://app.tracking/label/{$koli_code}",
+                    'connote_id' => $connote->id,
+                    'code' => $koli_code,
+                    "length" => $koli['koli_length'],
+                    "chargeable_weight" => $koli['koli_chargeable_weight'],
+                    "width" => $koli['koli_width'],
+                    "surcharge" => $koli['koli_surcharge'],
+                    "height" => $koli['koli_height'],
+                    "description" => $koli['koli_description'],
+                    "formula_id" => $koli['koli_formula_id'] ?? null,
+                    "volume" => $koli['koli_volume'],
+                    "weight" => $koli['koli_weight'],
+                    "custom_field" => $koli['koli_custom_field'],
+                ]);
             }
             DB::commit();
 

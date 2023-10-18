@@ -71,7 +71,7 @@ class Package extends Model
         return $this->belongsTo(Customer::class, 'destination_data_id');
     }
 
-    public function payment(): BelongsTo
+    public function payment_type(): BelongsTo
     {
         return $this->belongsTo(PaymentType::class, 'payment_type_id');
     }
